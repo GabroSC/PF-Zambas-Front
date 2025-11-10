@@ -51,7 +51,7 @@ function App() {
 
       const token = await getApiToken();
 
-      const res = await fetch(`${API_BASE_URL}/api/movies`, {
+      const res = await fetch(`${API_BASE_URL}/movies`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,7 +124,7 @@ function App() {
         nota: Number(form.nota),
       };
 
-      const res = await fetch(`${API_BASE_URL}/api/movies`, {
+      const res = await fetch(`${API_BASE_URL}/movies`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -171,7 +171,7 @@ function App() {
       setError(null);
       const token = await getApiToken();
 
-      const res = await fetch(`${API_BASE_URL}/api/movies/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/movies/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
