@@ -1,18 +1,31 @@
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { Auth0Provider } from '@auth0/auth0-react'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import { Auth0Provider } from "@auth0/auth0-react";
 
+const domain = import.meta.env.VITE_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
+const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
+const redirectUri = window.location.origin;
 
-createRoot(document.getElementById('root')).render(
-  <Auth0Provider
-      domain="dev-00ubiakhkdupzcl1.us.auth0.com"
-      clientId="JliITT1f01goscok3hPRSkgvq4ft1HdL"
+if (!domain || !clientId) {
+  console.error("⚠️ Configure VITE_AUTH0_DOMAIN e VITE_AUTH0_CLIENT_ID no .env");
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Auth0Provider
+      domain={domain}
+      clientId={clientId}
       authorizationParams={{
-        audience: "https://dev-00ubiakhkdupzcl1.us.auth0.com/api/v2/",
-        redirect_uri: window.location.origin
+        redirect_uri: redirectUri,
+        ...(audience ? { audience } : {}),
       }}
+      cacheLocation="localstorage"
+      useRefreshTokens={true}
     >
-    <App />
-  </Auth0Provider>,
-)
+      <App />
+    </Auth0Provider>
+  </React.StrictMode>
+);
